@@ -40,7 +40,7 @@ export default function DisputesPage() {
     queryKey: ['disputes', page, status],
     queryFn: () => adminApi.disputes({ page, limit: 20, status: status || undefined }),
     select: r => r.data,
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData
   })
 
   const { data: detail, isLoading: detailLoading } = useQuery({

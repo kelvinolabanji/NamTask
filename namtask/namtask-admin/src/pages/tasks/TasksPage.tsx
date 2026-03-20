@@ -50,7 +50,7 @@ export default function TasksPage() {
       date_to:   dateTo   || undefined,
     }),
     select: r => r.data,
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData
   })
 
   const tasks = data?.data ?? []

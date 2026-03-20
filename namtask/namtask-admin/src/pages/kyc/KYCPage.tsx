@@ -31,7 +31,7 @@ export default function KYCPage() {
     queryKey: ['kyc-list', tab, page],
     queryFn: () => adminApi.kycList({ status: tab, page, limit: 20 }),
     select: r => r.data,
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData
   })
 
   const { data: kycDetail, isLoading: detailLoading } = useQuery({

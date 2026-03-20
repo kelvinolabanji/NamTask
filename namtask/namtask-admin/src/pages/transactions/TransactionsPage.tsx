@@ -33,7 +33,7 @@ export default function TransactionsPage() {
       date_to:   dateTo   || undefined,
     }),
     select: r => r.data,
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData
   })
 
   const transactions = data?.data ?? []

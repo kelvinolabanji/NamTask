@@ -38,7 +38,7 @@ export default function UsersPage() {
     queryKey: ['admin-users', page, search, role, kycStatus],
     queryFn: () => adminApi.users({ page, limit: 25, search: search || undefined, role: role || undefined, kyc_status: kycStatus || undefined }),
     select: r => r.data,
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData
   })
 
   const { data: userDetail, isLoading: detailLoading } = useQuery({

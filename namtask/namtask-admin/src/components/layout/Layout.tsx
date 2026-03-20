@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import { useAuth } from '../lib/auth'
+import { useAuth } from '../../lib/auth'
 import {
   LayoutDashboard, Users, ClipboardList, ShieldCheck,
   Scale, CreditCard, AlertTriangle, LogOut, Menu, X,
   Bell, ChevronRight,
 } from 'lucide-react'
-import { cn } from '../lib/utils'
+import { cn } from '../../lib/utils'
 
 const NAV = [
   { to: '/',              icon: LayoutDashboard, label: 'Dashboard',    end: true },
