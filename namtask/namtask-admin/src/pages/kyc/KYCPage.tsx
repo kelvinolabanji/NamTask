@@ -105,7 +105,7 @@ export default function KYCPage() {
         <div className="px-5 py-3 border-b border-navy-100 flex items-center justify-between">
           <p className="font-semibold text-navy-700 capitalize">{tab.replace('_', ' ')} Applications</p>
           {tab === 'pending' && counts?.pending > 0 && (
-            <span className="badge-red animate-pulse">{counts.pending} awaiting review</span>
+            <span className="badge-red animate-pulse">{counts?.pending} awaiting review</span>
           )}
         </div>
         <Table
