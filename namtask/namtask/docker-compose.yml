@@ -1,0 +1,75 @@
+version: '3.9'
+
+# Development compose — hot reload, exposed ports, verbose logging
+# Usage: docker-compose up
+
+services:
+
+  postgres:
+    image: postgis/postgis:15-3.3-alpine
+    container_name: namtask_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       namtask
+      POSTGRES_USER:     namtask_user
+      POSTGRES_PASSWORD: namtask_dev_pass
+    volumes:
+      - pgdata_dev:/var/lib/postgresql/data
+      - ./scripts/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./scripts/schema_additions.sql:/docker-entrypoint-initdb.d/02_additions.sql:ro
+      - ./scripts/migrate_payments_v2.sql:/docker-entrypoint-initdb.d/03_payments.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U namtask_user -d namtask"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: namtask_redis_dev
+    ports:
+      - "6379:6379"
+    command: redis-server --loglevel warning
+
+  api:
+    build:
+      context: .
+      target: deps
+    container_name: namtask_api_dev
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV:            development
+      PORT:                3000
+      DB_HOST:             postgres
+      DB_PORT:             5432
+      DB_NAME:             namtask
+      DB_USER:             namtask_user
+      DB_PASSWORD:         namtask_dev_pass
+      REDIS_URL:           redis://redis:6379
+      JWT_SECRET:          dev_jwt_secret_not_for_production
+      JWT_EXPIRES_IN:      7d
+      COMMISSION_RATE:     0.10
+      WITHDRAWAL_FEE:      5.00
+      SMS_WEBHOOK_SECRET:  dev_sms_secret
+      FNB_WEBHOOK_SECRET:  dev_fnb_secret
+      BWK_WEBHOOK_SECRET:  dev_bwk_secret
+      ALLOWED_ORIGINS:     "*"
+      API_BASE_URL:        http://localhost:3000
+      APP_BASE_URL:        http://localhost:3000
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: ["node_modules/.bin/nodemon", "--watch", "src", "src/server.js"]
+
+volumes:
+  pgdata_dev:

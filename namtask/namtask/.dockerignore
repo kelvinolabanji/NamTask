@@ -1,0 +1,41 @@
+# ── Secrets — NEVER bake into image ──────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Node ──────────────────────────────────────────────────────────────────────
+node_modules
+npm-debug.log*
+yarn-error.log*
+.npm
+
+# ── Logs (mounted as volume at runtime) ──────────────────────────────────────
+logs/
+*.log
+
+# ── Uploads (mounted as volume at runtime) ────────────────────────────────────
+uploads/
+
+# ── Dev / test artifacts ──────────────────────────────────────────────────────
+.git
+.gitignore
+*.test.js
+*.spec.js
+__tests__/
+coverage/
+.nyc_output/
+
+# ── Editor / OS ───────────────────────────────────────────────────────────────
+.DS_Store
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+
+# ── Deployment config (not needed inside container) ───────────────────────────
+nginx/
+monitoring/
+.github/
+docker-compose*.yml
+TEST_REPORT.md
+README.md

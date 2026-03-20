@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "Nam Task",
+    "slug": "namtask",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "namtask",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a1a2e"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.namtask.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Nam Task needs your location to find nearby tasks.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Nam Task uses your location to track task progress.",
+        "NSCameraUsageDescription": "Nam Task needs camera access to upload task photos.",
+        "NSPhotoLibraryUsageDescription": "Nam Task needs photo library access."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#1a1a2e"
+      },
+      "package": "com.namtask.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ],
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-notifications",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Nam Task uses your location to track tasks."
+        }
+      ],
+      ["expo-camera", { "cameraPermission": "Nam Task needs camera access." }],
+      "expo-secure-store"
+    ],
+    "experiments": { "typedRoutes": true },
+    "extra": {
+      "eas": { "projectId": "YOUR_EAS_PROJECT_ID" },
+      "apiBaseUrl": "http://localhost:3000/api/v1"
+    }
+  }
+}
